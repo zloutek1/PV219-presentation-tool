@@ -1,0 +1,81 @@
+@import "Helvetica_font";
+@import "FI_logo_font";
+
+@import "_loader";
+@import "_sidebar";
+@import "_slide";
+@import "_fullscreen";
+@import "_colors";
+@import "_settings";
+
+
+body {
+    overflow: hidden;
+}
+
+.grid {
+    display: grid;
+    grid-template-areas: "sidebar content";
+    grid-template-columns: var(--sidebar-width) auto;
+    min-height: 100vh;
+}
+
+.content {
+    grid-area: content;
+
+    display: grid;
+    grid-auto-flow: row dense;
+    grid-auto-rows: 100vh;
+
+    .arrows {
+        position: fixed;
+        right: calc(var(--slide-padding-hor) + 1vmin); bottom: calc(var(--slide-padding-ver) + 1vmin);
+        width: 8vmin; height: 8vmin;
+        box-sizing: border-box;
+        z-index: 999997;
+
+        display: grid;
+        grid-template-areas: "  .  up     .  "
+                             "left  .   right"
+                             "  .  down   .  ";
+        grid-template-columns: 33% 33% 33%;
+        grid-template-rows: 33% 33% 33%;
+
+        .arrow {
+            font-size: 1.5em;
+            text-align: center;
+            cursor: pointer;
+
+            &.up { grid-area: up; }
+            &.down { grid-area: down; }
+            &.left { grid-area: left; }
+            &.right { grid-area: right; }
+        }
+    }
+
+    .collection {
+        display: block;
+        min-width: 100%;
+        height: 100%;
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-columns: calc(100vw - var(--sidebar-width));
+        grid-auto-columns: calc(100vw - var(--sidebar-width));
+
+        .slide-content {
+            position: relative;
+            box-sizing: border-box;
+
+            .slide {
+                position: absolute;
+                top: var(--slide-padding-ver); left: var(--slide-padding-hor);
+                bottom: var(--slide-padding-ver); right: var(--slide-padding-hor);
+                box-sizing: border-box;
+                box-shadow: 0px 1px 100em #AAA;
+            }
+        }
+    }
+}
+
+

@@ -1,0 +1,39 @@
+body.fullscreen {
+    .sidebar {
+        display: none;
+    }
+
+    .grid {
+        grid-template-columns: 0 auto;
+    }
+
+    .content {
+        .arrows {
+            right: calc(1vmin); bottom: calc(1vmin);
+        }
+
+        .collection {
+            grid-columns: 100vw;
+            grid-auto-columns: 100vw;
+
+            .slide {
+                top: 0; left: 0;
+                bottom: 0; right: 0;
+                box-shadow: none;
+                overflow: hidden;
+            }
+        }
+    }
+
+    .content .collection .slide {
+        .textElement {
+            &:before {
+                content: '';
+            }
+
+            &:after {
+                background: transparent;
+            }
+        }
+    }
+}

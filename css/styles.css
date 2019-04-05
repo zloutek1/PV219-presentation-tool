@@ -1,0 +1,405 @@
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Helvetica"), url("../fonts/Helvetica/Helvetica.woff") format("woff");
+}
+@font-face {
+  font-family: "Helvetica Oblique";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Helvetica Oblique"), url("../fonts/Helvetica/Helvetica-Oblique.woff") format("woff");
+}
+@font-face {
+  font-family: "Helvetica Compressed";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Helvetica Compressed"), url("../fonts/Helvetica/helvetica-compressed-5871d14b6903a.woff") format("woff");
+}
+@font-face {
+  font-family: "Helvetica Rounded Bold";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Helvetica Rounded Bold"), url("../fonts/Helvetica/helvetica-rounded-bold-5871d05ead8de.woff") format("woff");
+}
+@font-face {
+  font-family: "Helvetica";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Helvetica"), url("../fonts/Helvetica/Helvetica-Bold.woff") format("woff");
+}
+@font-face {
+  font-family: "Helvetica Bold Oblique";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Helvetica Bold Oblique"), url("../fonts/Helvetica/Helvetica-BoldOblique.woff") format("woff");
+}
+@font-face {
+  font-family: "Helvetica Light";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Helvetica Light"), url("../fonts/Helvetica/helvetica-light-587ebe5a59211.woff") format("woff");
+}
+@font-face {
+  font-family: "FI_MUNI";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/FI_logo/fi-logo210.ttf") format("truetype");
+}
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #EDECEE;
+  z-index: 999999;
+}
+.loader .loaded {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFFFFF;
+}
+.loader .loaded h1 {
+  display: block;
+  position: absolute;
+  top: calc(100% - 3em);
+  left: calc(100% - 3em);
+  width: 2em;
+  font-family: Helvetica;
+  text-align: right;
+}
+
+:root {
+  --sidebar-width: 5vw;
+  --slide-padding-ver: 10%;
+  --slide-padding-hor: 8%;
+  --anchor-size: 0.75rem;
+  --text-element-drag-width: 5px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  display: grid;
+  grid-auto-rows: var(--sidebar-width);
+  grid-template-columns: var(--sidebar-width);
+  z-index: 999998;
+}
+.sidebar .button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.sidebar .button:not(.has-background) {
+  font-size: 2em;
+}
+.sidebar .button::before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: calc(var(--sidebar-width) / 5);
+  left: calc(var(--sidebar-width) / 5);
+  width: calc(var(--sidebar-width) - var(--sidebar-width) / 5 * 2);
+  height: calc(var(--sidebar-width) - var(--sidebar-width) / 5 * 2);
+  border-radius: 3px;
+  z-index: -1;
+}
+
+.content .collection .slide .center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+}
+.content .collection .slide .textElement {
+  outline: none;
+}
+.content .collection .slide .textElement:before {
+  content: "text_fields";
+  font-family: "Material Icons";
+  position: absolute;
+  top: 50%;
+  left: -1.75em;
+  transform: translateY(-50%);
+  font-size: 2em;
+  color: var(--placeholder-color);
+}
+.content .collection .slide .textElement:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -1em;
+  width: 2px;
+  height: 100%;
+  background-color: var(--placeholder-color);
+}
+.content .collection .slide .textElement .editor {
+  padding: 0.25em;
+  font-size: 2rem;
+}
+.content .collection .slide .textElement .editor[contentEditable=true]:empty:not(:focus):before {
+  content: attr(data-placeholder);
+  color: var(--placeholder-color);
+}
+.content .collection .slide .textElement .editor:focus {
+  outline: none;
+}
+.content .collection .slide .textElement .editor:focus + .anchors .anchor[data-direction=e],
+.content .collection .slide .textElement .editor:focus + .anchors .anchor[data-direction=w] {
+  visibility: visible;
+}
+.content .collection .slide .textElement .editor .b {
+  font-weight: bold;
+}
+.content .collection .slide .textElement .anchor {
+  position: absolute;
+  width: var(--anchor-size);
+  height: var(--anchor-size);
+  pointer-events: all;
+  visibility: hidden;
+  border: 1px solid var(--outline-color);
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+.content .collection .slide .textElement .anchor[data-direction=n] {
+  left: 50%;
+  bottom: 100%;
+  margin-left: calc(-1 * var(--anchor-size) / 2);
+  margin-bottom: calc(-1 * var(--anchor-size) / 2);
+  cursor: n-resize;
+}
+.content .collection .slide .textElement .anchor[data-direction=e] {
+  left: 100%;
+  top: 50%;
+  margin-top: calc(-1 * var(--anchor-size) / 2);
+  margin-left: calc(-1 * var(--anchor-size) / 2);
+  cursor: e-resize;
+}
+.content .collection .slide .textElement .anchor[data-direction=s] {
+  left: 50%;
+  top: 100%;
+  margin-left: calc(-1 * var(--anchor-size) / 2);
+  margin-top: calc(-1 * var(--anchor-size) / 2);
+  cursor: n-resize;
+}
+.content .collection .slide .textElement .anchor[data-direction=w] {
+  right: 100%;
+  top: 50%;
+  margin-top: calc(-1 * var(--anchor-size) / 2);
+  margin-right: calc(-1 * var(--anchor-size) / 2);
+  cursor: e-resize;
+}
+.content .collection .slide .textElement .draggable {
+  position: absolute;
+  top: calc(-1 * var(--text-element-drag-width) / 2);
+  left: calc(-1 * var(--text-element-drag-width) / 2);
+  width: calc(100% + var(--text-element-drag-width));
+  height: calc(100% + var(--text-element-drag-width));
+  box-sizing: border-box;
+  pointer-events: none;
+  border: solid 1px var(--outline-color);
+  display: none;
+}
+.content .collection .slide .textElement .draggable > * {
+  pointer-events: stroke;
+  cursor: pointer;
+}
+.content .collection .slide .textElement .formatting-header {
+  position: absolute;
+  top: calc(-50% - 0.5em);
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 600ms, visibility 600ms;
+}
+.content .collection .slide .textElement .formatting-header .button {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  color: var(--placeholder-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content .collection .slide .textElement .editor:focus ~ .formatting-header {
+  visibility: visible;
+  opacity: 1;
+}
+.content .collection .slide .textElement .editor:focus ~ .draggable {
+  display: block;
+}
+
+body.fullscreen .sidebar {
+  display: none;
+}
+body.fullscreen .grid {
+  grid-template-columns: 0 auto;
+}
+body.fullscreen .content .arrows {
+  right: calc(1vmin);
+  bottom: calc(1vmin);
+}
+body.fullscreen .content .collection {
+  grid-columns: 100vw;
+  grid-auto-columns: 100vw;
+}
+body.fullscreen .content .collection .slide {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+body.fullscreen .content .collection .slide .textElement:before {
+  content: "";
+}
+body.fullscreen .content .collection .slide .textElement:after {
+  background: transparent;
+}
+
+:root {
+  --light-text-color: #000000;
+  --light-body: #E8E9EC;
+  --light-slide: #F5F5F5;
+  --light-slide-shadow: #AAA;
+  --light-sidebar: #EFB12F;
+  --light-sidebar-secondary: #ffe3aa;
+  --dark-text-color: #FFFFFF;
+  --dark-body: #151A1E;
+  --dark-slide: darken(#151A1E, 20%);
+  --dark-slide-shadow: #000;
+  --dark-sidebar: #101316;
+  --dark-sidebar-secondary: #F6C96E;
+  --placeholder-color: #CACFD8;
+  --outline-color: #62B2F4;
+}
+
+body {
+  color: var(--light-text-color);
+  background-color: var(--light-body);
+}
+body .sidebar {
+  background-color: var(--light-sidebar);
+}
+body .content .collection .slide {
+  background-color: var(--light-slide);
+  box-shadow: 0px 1px 100em var(--light-side-shadow);
+}
+body .sidebar .button.has-background {
+  color: var(--light-sidebar);
+}
+body .sidebar .button.has-background::before {
+  background-color: var(--light-sidebar-secondary);
+}
+
+body.dark {
+  color: var(--dark-text-color);
+  background-color: var(--dark-body);
+}
+body.dark .sidebar {
+  background-color: var(--dark-sidebar);
+}
+body.dark .content .collection .slide {
+  background-color: var(--dark-slide);
+  box-shadow: 0px 1px 100em var(--dark-slide-shadow);
+}
+body.dark .sidebar .button.has-background {
+  color: var(--dark-sidebar);
+}
+body.dark .sidebar .button.has-background::before {
+  background-color: var(--dark-sidebar-secondary);
+}
+
+:root {
+  --sidebar-width: 5vw;
+  --slide-padding-ver: 10%;
+  --slide-padding-hor: 8%;
+  --anchor-size: 0.75rem;
+  --text-element-drag-width: 5px;
+}
+
+body {
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-areas: "sidebar content";
+  grid-template-columns: var(--sidebar-width) auto;
+  min-height: 100vh;
+}
+
+.content {
+  grid-area: content;
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-auto-rows: 100vh;
+}
+.content .arrows {
+  position: fixed;
+  right: calc(var(--slide-padding-hor) + 1vmin);
+  bottom: calc(var(--slide-padding-ver) + 1vmin);
+  width: 8vmin;
+  height: 8vmin;
+  box-sizing: border-box;
+  z-index: 999997;
+  display: grid;
+  grid-template-areas: "  .  up     .  " "left  .   right" "  .  down   .  ";
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 33% 33% 33%;
+}
+.content .arrows .arrow {
+  font-size: 1.5em;
+  text-align: center;
+  cursor: pointer;
+}
+.content .arrows .arrow.up {
+  grid-area: up;
+}
+.content .arrows .arrow.down {
+  grid-area: down;
+}
+.content .arrows .arrow.left {
+  grid-area: left;
+}
+.content .arrows .arrow.right {
+  grid-area: right;
+}
+.content .collection {
+  display: block;
+  min-width: 100%;
+  height: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-columns: calc(100vw - var(--sidebar-width));
+  grid-auto-columns: calc(100vw - var(--sidebar-width));
+}
+.content .collection .slide-content {
+  position: relative;
+  box-sizing: border-box;
+}
+.content .collection .slide-content .slide {
+  position: absolute;
+  top: var(--slide-padding-ver);
+  left: var(--slide-padding-hor);
+  bottom: var(--slide-padding-ver);
+  right: var(--slide-padding-hor);
+  box-sizing: border-box;
+  box-shadow: 0px 1px 100em #AAA;
+}
+
+/*# sourceMappingURL=styles.css.map */

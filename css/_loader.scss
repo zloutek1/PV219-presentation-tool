@@ -1,0 +1,27 @@
+.loader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #EDECEE;
+    z-index: 999999;
+
+    .loaded {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background-color: #FFFFFF;
+
+        h1 {
+            display: block;
+            position: absolute;
+            top: calc(100% - 3em);
+            left: calc(100% - 3em);
+            width: 2em;
+
+            font-family: Helvetica;
+            text-align: right;
+        }
+
+
+    }
+}

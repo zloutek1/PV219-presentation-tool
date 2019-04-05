@@ -1,0 +1,42 @@
+:root {
+    --light-text-color: #000000;
+    --light-body: #E8E9EC;
+    --light-slide: #F5F5F5;
+    --light-slide-shadow: #AAA;
+    --light-sidebar: #EFB12F;
+    --light-sidebar-secondary: #ffe3aa;
+
+    --dark-text-color: #FFFFFF;
+    --dark-body: #151A1E;
+    --dark-slide: darken(#151A1E, 20%);
+    --dark-slide-shadow: #000;
+    --dark-sidebar: #101316;
+    --dark-sidebar-secondary: #F6C96E;
+
+    --placeholder-color: #CACFD8;
+    --outline-color: #62B2F4;
+}
+
+body {
+    color: var(--light-text-color);
+    background-color: var(--light-body);
+    .sidebar { background-color: var(--light-sidebar); }
+    .content .collection .slide {
+        background-color: var(--light-slide);
+        box-shadow: 0px 1px 100em var(--light-side-shadow);
+    }
+    .sidebar .button.has-background { color: var(--light-sidebar); }
+    .sidebar .button.has-background::before { background-color: var(--light-sidebar-secondary); }
+}
+
+body.dark {
+    color: var(--dark-text-color);
+    background-color: var(--dark-body);
+    .sidebar { background-color: var(--dark-sidebar); }
+    .content .collection .slide {
+        background-color: var(--dark-slide);
+        box-shadow: 0px 1px 100em var(--dark-slide-shadow);
+    }
+    .sidebar .button.has-background { color: var(--dark-sidebar); }
+    .sidebar .button.has-background::before { background-color: var(--dark-sidebar-secondary); }
+}

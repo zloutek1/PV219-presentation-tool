@@ -1,0 +1,41 @@
+@import "_settings";
+
+.sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+
+    display: grid;
+    grid-auto-rows: var(--sidebar-width);
+    grid-template-columns: var(--sidebar-width);
+
+    z-index: 999998;
+
+    .button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5em;
+        cursor: pointer;
+
+        &:not(.has-background) {
+            font-size: 2em;
+        }
+    }
+
+    .button::before {
+        content: "";
+        position: absolute;
+
+        display: block;
+        top: calc(var(--sidebar-width) / 5);
+        left: calc(var(--sidebar-width) / 5);
+        width: calc(var(--sidebar-width) - var(--sidebar-width) / 5 * 2);
+        height: calc(var(--sidebar-width) - var(--sidebar-width) / 5 * 2);
+        border-radius: 3px;
+
+        z-index: -1;
+    }
+}
